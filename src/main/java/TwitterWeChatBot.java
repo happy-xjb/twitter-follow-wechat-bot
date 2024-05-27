@@ -34,6 +34,12 @@ public class TwitterWeChatBot {
         // 企业微信机器人的 Webhook URL
         String webhookUrl = properties.getProperty("wechat.webhookUrl");
 
+        // 初始化当前关注列表
+        for (String username : usernames) {
+            Set<Long> currentFollowings = getCurrentFollowings(twitter, username);
+            currentFollowingsMap.put(username, currentFollowings);
+        }
+
         // 定时任务：每隔一小时检查一次新的关注
         TimerTask task = new TimerTask() {
             @Override
